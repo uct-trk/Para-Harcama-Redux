@@ -1,11 +1,12 @@
 /* eslint-disable no-template-curly-in-string */
-import { Form, Input, Button, message, Space } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Form, Input, Button } from 'antd';
+import { useHistory } from 'react-router-dom';
 
 import api from '../utils/api';
+import showError from '../utils/showError';
 
 export const SignUp = () => {
-    const history = useNavigate();
+    const history = useHistory();
     const layout = {
         labelCol: { span: 8 },
         wrapperCol: { span: 16 },
@@ -22,14 +23,10 @@ export const SignUp = () => {
         },
     };
 
-    const showError = (errorMessage: string) => {
-        message.error(errorMessage);
-    };
-
     const onFinish = async (values: any) => {
         try {
             await api.post("/users/register", values);
-            history("/login");
+            history.push("/login", { newSignUp: true });
         } catch (error) {
             showError((error as any).response.data.errorMessage);
         }

@@ -1,7 +1,7 @@
-import React from 'react';
 import SignUp from './components/SignUp';
-import { Route, Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { Layout, Menu } from 'antd';
+import Login from './components/Login';
 
 function App() {
   const { Header, Content, Footer } = Layout;
@@ -17,10 +17,13 @@ function App() {
           </Menu>
         </Header>
         <Content className="site-layout" style={{ padding: '50px', marginTop: 64 }}>
-          
-          <Routes>
-            <Route element={<SignUp />} path="/register" />
-          </Routes>
+
+
+          <Route component={SignUp} path="/register" />
+
+
+          <Route component={Login} path="/login" />
+
         </Content>
         <Footer style={{ textAlign: 'center' }}>Para Harcama ©2021 Created by Ugurcan</Footer>
       </Layout>
