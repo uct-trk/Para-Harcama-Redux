@@ -7,6 +7,15 @@ const defaultState : UserState = {
 }
 
 const userReducer = (state: UserState = defaultState, action: UserAction) => {
-    return state
+    switch(action.type){
+        case "LOGIN_START":
+            return {...state, loading: true, error: ""}
+        case "LOGIN_SUCCESS":
+            return {...state, loading: false, data: action.payload}
+        case "LOGIN_ERROR":
+            return {...state, loading: false, error: "Login Failed"}
+        default: 
+            return state;            
+    }
 }
 export default userReducer;
