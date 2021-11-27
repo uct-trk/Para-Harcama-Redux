@@ -1,10 +1,11 @@
-import { Table, Tag, Button, Input, Select, Form, Modal } from 'antd';
+import { Table, Tag, Button, Input, Select, Form, Modal, Space, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../store';
-import { addCategory, getCategories } from '../store/actions/categoryActions';
+import { addCategory, getCategories, updateCategory } from '../store/actions/categoryActions';
 import { Category, CategoryForm } from '../types/category';
 import { SketchPicker } from 'react-color';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 type Mode = "new" | "edit";
 
@@ -21,6 +22,7 @@ function Categories() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [mode, setMode] = useState<Mode>("new")
     const [form, setForm] = useState<CategoryForm>(emptyForm)
+    const [updateId, setUpdateId] = useState<number | null>(null)
 
     const showModal = (mode: Mode) => {
         setIsModalVisible(true);
@@ -29,16 +31,19 @@ function Categories() {
 
     const handleOk = () => {
         // mode değerine göre create veya update action fonksiyonunu çağırır
-        dispatch(addCategory(form))
+        if (mode === "new") dispatch(addCategory(form))
+        else if (mode === "edit" && typeof updateId === 'number') dispatch(updateCategory(form, updateId))
         setIsModalVisible(false);
         setMode("new");
         setForm(emptyForm)
+        setUpdateId(null)
     };
 
     const handleCancel = () => {
         setIsModalVisible(false);
         setMode("new")
         setForm(emptyForm)
+        setUpdateId(null)
     };
 
     const columns = [
@@ -55,6 +60,20 @@ function Categories() {
                 return <Tag color={category.color}> {text.toUpperCase()}</ Tag>
 
             },
+        },
+        {
+            title: "Action",
+            key: "action",
+            render: (text: string, category: Category) => (
+                <Space size="middle">
+                    <EditOutlined style={{ color: "#0390fc" }} onClick={() => {
+                        showModal('edit')
+                        setForm(category)
+                        setUpdateId(category.id)
+                    }} />
+                    <DeleteOutlined style={{ color: "#c20808" }} />
+                </Space>
+            )
         }
     ];
 
@@ -63,6 +82,7 @@ function Categories() {
     useEffect(() => {
         dispatch(getCategories());
     }, [])
+    console.log(form)
 
     return (
         <>
@@ -100,7 +120,7 @@ function Categories() {
 
                 </Modal>
             </div>
-            <Table columns={columns} dataSource={data} />
+            <Table loading={loading} columns={columns} dataSource={data} />
         </>
     )
 
