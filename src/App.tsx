@@ -4,6 +4,7 @@ import { Layout, Menu } from 'antd';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Categories from './components/Categories'
+import Records from './components/Records';
 
 function App() {
   const { Header, Content, Footer } = Layout;
@@ -24,6 +25,7 @@ function App() {
           <Route component={SignUp} path="/register" />
           <Route component={Login} path="/login" />
           <PrivateRoute component={Categories} path="/categories" />
+          <PrivateRoute component={Records} path="/records" />
 
         </Content>
         <Footer style={{ textAlign: 'center' }}>Para Harcama ©2021 Created by Ugurcan</Footer>

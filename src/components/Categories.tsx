@@ -6,9 +6,7 @@ import { addCategory, deleteCategory, getCategories, updateCategory } from '../s
 import { Category, CategoryForm } from '../types/category';
 import { SketchPicker } from 'react-color';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-
-type Mode = "new" | "edit" | "delete";
-
+import { Mode } from '../types/general';
 
 const emptyForm: CategoryForm = {
     name: "",
@@ -61,7 +59,6 @@ function Categories() {
             key: 'type',
             render: (text: string, category: Category) => {
                 return <Tag color={category.color}> {text.toUpperCase()}</ Tag>
-
             },
         },
         {
@@ -88,7 +85,6 @@ function Categories() {
     useEffect(() => {
         dispatch(getCategories());
     }, [])
-    console.log(form)
 
     return (
         <>
