@@ -31,3 +31,13 @@ export const addCategory =
       dispatch({ type: "UPDATE_CATEGORY_ERROR" });
     }
   }
+
+  export const deleteCategory = (categoryId: number) => async (dispatch : CategoryDispatch) => {
+    dispatch({type: "DELETE_CATEGORY_START"});
+    try {
+       await api.delete("/categories/" + categoryId);
+      dispatch({type: "DELETE_CATEGORY_SUCCESS", payload: categoryId})
+    } catch {
+      dispatch({ type: "DELETE_CATEGORY_ERROR" });
+    }
+  }
