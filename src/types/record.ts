@@ -44,5 +44,16 @@ interface ADD_ERROR {
     type: "ADD_RECORD_ERROR"
 }
 
-export type RecordAction = GET_START | GET_SUCCESS | GET_ERROR | ADD_START | ADD_SUCCESS | ADD_ERROR
+interface UPDATE_START {
+    type: "UPDATE_RECORD_START"
+}
+interface UPDATE_SUCCESS {
+    type: "UPDATE_RECORD_SUCCESS"
+    payload: Record
+}
+interface UPDATE_ERROR {
+    type: "UPDATE_RECORD_ERROR"
+}
+
+export type RecordAction = GET_START | GET_SUCCESS | GET_ERROR | ADD_START | ADD_SUCCESS | ADD_ERROR | UPDATE_START | UPDATE_SUCCESS | UPDATE_ERROR
 export type RecordDispatch = ThunkDispatch<RecordState, void, RecordAction>;
