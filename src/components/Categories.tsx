@@ -1,4 +1,4 @@
-import { Table, Tag, Button, Input, Select, Form, Modal, Space, Spin } from 'antd';
+import { Table, Tag, Button, Input, Select, Form, Modal, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../store';
@@ -16,7 +16,7 @@ const emptyForm: CategoryForm = {
 
 function Categories() {
 
-    const { data, loading, error } = useSelector((state: AppState) => state.categories)
+    const { data, loading } = useSelector((state: AppState) => state.categories)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [mode, setMode] = useState<Mode>("new")
     const [form, setForm] = useState<CategoryForm>(emptyForm)
@@ -131,7 +131,7 @@ function Categories() {
 
                 </Modal>
             </div>
-            <Table loading={loading} columns={columns} dataSource={data} />
+            <Table loading={loading} columns={columns} dataSource={data} rowKey="id" />
         </>
     )
 

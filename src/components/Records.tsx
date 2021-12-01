@@ -16,7 +16,7 @@ const emptyForm: RecordForm = {
 }
 
 const Records = () => {
-    const { data, loading, error } = useSelector((state: AppState) => state.records)
+    const { data, loading } = useSelector((state: AppState) => state.records)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [mode, setMode] = useState<Mode>("new")
     const [form, setForm] = useState<RecordForm>(emptyForm)
@@ -97,7 +97,7 @@ const Records = () => {
                             setForm({ title, amount, category_id })
                             setUpdateId(record.id)
                         }} />
-                        <DeleteOutlined style={{ color: "#c20808" }} onClick={() => { 
+                        <DeleteOutlined style={{ color: "#c20808" }} onClick={() => {
                             showModal("delete")
                             setDeleteId(record.id)
                         }} />
@@ -156,7 +156,7 @@ const Records = () => {
                                 >
                                     <Select.Option value={0} disabled>Select a category</Select.Option>
                                     {categories.map(category => {
-                                        return <Select.Option value={category.id}>{category.name}</Select.Option>
+                                        return <Select.Option key={category.id} value={category.id}>{category.name}</Select.Option>
                                     })}
                                 </Select>
                             </Form.Item>
@@ -166,7 +166,7 @@ const Records = () => {
 
                 </Modal>
             </div>
-            <Table loading={loading} columns={columns} dataSource={data} />
+            <Table loading={loading} columns={columns} dataSource={data} rowKey="id" />
         </>
     )
 }
