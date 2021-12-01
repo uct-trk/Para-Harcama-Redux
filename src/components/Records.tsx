@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { AppState } from "../store"
 import { getCategories } from "../store/actions/categoryActions"
-import { addRecord, getRecords, updateRecord } from "../store/actions/recordActions"
+import { addRecord, deleteRecord, getRecords, updateRecord } from "../store/actions/recordActions"
 import { Category } from "../types/category"
 import { Mode } from "../types/general"
 import { Record, RecordForm } from "../types/record"
@@ -33,8 +33,8 @@ const Records = () => {
     const handleOk = () => {
         if (mode === "new") dispatch(addRecord(form))
         else if (mode === "edit" && typeof updateId === 'number') dispatch(updateRecord(form, updateId))
-/*         else if (mode === "delete" && typeof deleteId === "number") dispatch(deleteRecord(deleteId))
- */        setIsModalVisible(false);
+        else if (mode === "delete" && typeof deleteId === "number") dispatch(deleteRecord(deleteId))
+        setIsModalVisible(false);
         setMode("new");
         setForm(emptyForm)
         setUpdateId(null)
@@ -97,7 +97,10 @@ const Records = () => {
                             setForm({ title, amount, category_id })
                             setUpdateId(record.id)
                         }} />
-                        <DeleteOutlined style={{ color: "#c20808" }} onClick={() => { }} />
+                        <DeleteOutlined style={{ color: "#c20808" }} onClick={() => { 
+                            showModal("delete")
+                            setDeleteId(record.id)
+                        }} />
                     </Space>
                 )
             }
